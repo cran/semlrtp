@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Fai Cheung &amp; Mark Hok Chio Lai" />
 
-<meta name="date" content="2024-06-19" />
+<meta name="date" content="2026-07-19" />
 
 <title>Get Started</title>
 
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Get Started</h1>
 <h4 class="author">Shu Fai Cheung &amp; Mark Hok Chio Lai</h4>
-<h4 class="date">2024-06-19</h4>
+<h4 class="date">2026-07-19</h4>
 
 
 
@@ -374,9 +374,9 @@ compute LRT <em>p</em>-values for selected free parameters in a model
 fitted by <code>lavaan</code>.</p>
 <p>These are the packages needed for this illustration:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; This is lavaan 0.6-18</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(semlrtp)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; This is lavaan 0.7-2.3110</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(semlrtp)</span></code></pre></div>
 </div>
 <div id="lrt-p-values" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> LRT
@@ -394,39 +394,39 @@ developed to facilitate the use of this <em>p</em>-value.</p>
 <h2><span class="header-section-number">3.1</span> Data</h2>
 <p>This is the sample dataset from the package, with 16 variables and a
 group variable:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">data</span>(data_sem16)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(data_sem16), <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;      x1    x2    x3    x4     x5     x6    x7    x8    x9   x10   x11    x12</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 1  1.00 -1.43  0.45 -0.67 -0.044 -1.316 -0.52 -0.35 -1.01  1.40 -0.22 -1.879</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 2  0.07 -0.45  1.85 -0.68  0.524 -0.172  0.52 -2.46 -0.34 -0.20 -0.55 -0.948</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 3  0.95  0.24  0.07  0.69 -0.726  0.164 -0.55 -0.69 -1.36  0.36  0.16  0.758</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 4  0.28  0.92  0.29 -0.93 -1.516 -0.047 -0.37  0.69  0.38  0.19  0.21  1.089</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 5 -2.10 -0.55 -1.22 -1.57 -0.886  1.405  1.28  1.00 -1.74 -0.96 -1.51 -0.062</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 6  1.01  1.05  0.93  0.70 -0.380  1.513 -1.97  1.44  2.42  1.45  0.60  0.521</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;      x13   x14    x15    x16 group</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 1 -0.110 -0.89  0.572  0.093 gamma</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 2 -0.036 -1.65  0.142 -0.506 gamma</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 3 -0.562 -0.53  0.508  1.549 gamma</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; 4 -0.885  0.93 -0.824  2.374 gamma</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 5  0.076  1.16 -0.011  0.491 gamma</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 6  0.830  0.45  1.886  1.489 gamma</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(data_sem16)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(data_sem16), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;      x1    x2    x3    x4     x5     x6    x7    x8    x9   x10   x11    x12</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; 1  1.00 -1.43  0.45 -0.67 -0.044 -1.316 -0.52 -0.35 -1.01  1.40 -0.22 -1.879</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 2  0.07 -0.45  1.85 -0.68  0.524 -0.172  0.52 -2.46 -0.34 -0.20 -0.55 -0.948</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 3  0.95  0.24  0.07  0.69 -0.726  0.164 -0.55 -0.69 -1.36  0.36  0.16  0.758</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 4  0.28  0.92  0.29 -0.93 -1.516 -0.047 -0.37  0.69  0.38  0.19  0.21  1.089</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 5 -2.10 -0.55 -1.22 -1.57 -0.886  1.405  1.28  1.00 -1.74 -0.96 -1.51 -0.062</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 6  1.01  1.05  0.93  0.70 -0.380  1.513 -1.97  1.44  2.42  1.45  0.60  0.521</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;      x13   x14    x15    x16 group</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 1 -0.110 -0.89  0.572  0.093 gamma</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 2 -0.036 -1.65  0.142 -0.506 gamma</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 3 -0.562 -0.53  0.508  1.549 gamma</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 4 -0.885  0.93 -0.824  2.374 gamma</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 5  0.076  1.16 -0.011  0.491 gamma</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 6  0.830  0.45  1.886  1.489 gamma</span></span></code></pre></div>
 </div>
 <div id="model" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Model</h2>
 <p>This is a model to be fitted, with four latent factors, and a
 structural model for the factors:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="st">f1 =~ x1 + x2 + x3</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="st">f2 =~ x5 + x6 + x7</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="st">f3 =~ x9 + x10 + x11</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="st">f4 =~ x13 + x14 + x15</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="st">f3 ~ f1 + f2</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="st">f1 =~ x1 + x2 + x3</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="st">f2 =~ x5 + x6 + x7</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="st">f3 =~ x9 + x10 + x11</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="st">f4 =~ x13 + x14 + x15</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="st">f3 ~ f1 + f2</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>We first fit a model to the whole sample:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod,</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>           data_sem16)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>           data_sem16)</span></code></pre></div>
 </div>
 <div id="lrt-p-values-for-selected-parameters" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> LRT <em>p</em>-Values
@@ -437,29 +437,29 @@ For Selected Parameters</h2>
 <p>By default, LRT <em>p</em>-values will be computed only for
 regression paths (<code>&quot;~&quot;</code>) and covariances (<code>&quot;~~&quot;</code>),
 excluding variances and error covariances.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>fit_lrtp <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fit_lrtp <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit)</span></code></pre></div>
 <p>By default, the output will be printed in <code>lavaan</code> style,
 and only parameters with LRT <em>p</em>-values are printed:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>fit_lrtp</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;   f3 ~                                                </span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;     f1                0.656    0.191   13.381    0.000</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;     f2                0.347    0.179    4.016    0.045</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;   f4 ~                                                </span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;     f3                0.602    0.131   44.155    0.000</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; Covariances:</span></span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;   f1 ~~                                               </span></span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;     f2                0.099    0.039    9.729    0.002</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>fit_lrtp</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;   f3 ~                                                </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;     f1                0.656    0.191   13.381    0.000</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;     f2                0.347    0.179    4.016    0.045</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;   f4 ~                                                </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt;     f3                0.602    0.131   44.155    0.000</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; Covariances:</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;   f1 ~~                                               </span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt;     f2                0.099    0.039    9.729    0.002</span></span></code></pre></div>
 <p>The column <code>Chisq</code> shows the <span class="math inline">\(\chi^2\)</span> difference of the likelihood ratio
 test when a parameter is fixed to zero.</p>
 <p>The column <code>LRTp</code> shows the LRT <em>p</em>-value.</p>
@@ -472,27 +472,27 @@ the likelihood ratio test (LRT) <em>p</em>-value (a.k.a. the <span class="math i
 parameter is fitted to zero.</p>
 <p>For example, we fix the path from <code>f2</code> to <code>f3</code>
 to zero and then do an LR test:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>mod_f3_f2 <span class="ot">&lt;-</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="st">f1 =~ x1 + x2 + x3</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="st">f2 =~ x5 + x6 + x7</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="st">f3 =~ x9 + x10 + x11</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="st">f4 =~ x13 + x14 + x15</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="st">f3 ~ f1 + 0*f2</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>fit_f3_f2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod_f3_f2,</span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>                 data_sem16)</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="fu">lavTestLRT</span>(fit_f3_f2,</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>           fit)</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; Chi-Squared Difference Test</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;           Df   AIC   BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)  </span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; fit       50 12206 12313 41.183                                         </span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; fit_f3_f2 51 12208 12311 45.199      4.016 0.094743       1    0.04507 *</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>mod_f3_f2 <span class="ot">&lt;-</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="st">f1 =~ x1 + x2 + x3</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="st">f2 =~ x5 + x6 + x7</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="st">f3 =~ x9 + x10 + x11</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="st">f4 =~ x13 + x14 + x15</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="st">f3 ~ f1 + 0*f2</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>fit_f3_f2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod_f3_f2,</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>                 data_sem16)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">lavTestLRT</span>(fit_f3_f2,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>           fit)</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; Chi-Squared Difference Test</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;           Df   AIC   BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)  </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; fit       50 12206 12313 41.183                                         </span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; fit_f3_f2 51 12208 12311 45.199      4.016 0.094743       1    0.04507 *</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>Unlike the original <em>p</em>-value of this path, 0.052, the LRT
 <em>p</em>-value is 0.045, suggesting that the path from <code>f2</code>
 to <code>f2</code> is significant.</p>
@@ -511,29 +511,29 @@ on the parameterization <span class="citation">(Gonzalez &amp; Griffin,
 2001)</span>.</p>
 <p>For example, we can fit the same model by changing the indicators
 being fixed to 1.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="st">f1 =~ x2 + x1 + x3</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="st">f2 =~ x7 + x5 + x6</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="st">f3 =~ x11 + x9 + x10</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="st">f4 =~ x14 + x13 + x15</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="st">f3 ~ f1 + f2</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod2,</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>            data_sem16)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="st">f1 =~ x2 + x1 + x3</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="st">f2 =~ x7 + x5 + x6</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="st">f3 =~ x11 + x9 + x10</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="st">f4 =~ x14 + x13 + x15</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="st">f3 ~ f1 + f2</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="st">f4 ~ f3</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod2,</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>            data_sem16)</span></code></pre></div>
 <p>This model and the previous one have exactly identical model fit, as
 expected:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">fitMeasures</span>(fit, <span class="fu">c</span>(<span class="st">&quot;chisq&quot;</span>, <span class="st">&quot;df&quot;</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;  chisq     df </span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; 41.183 50.000</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">fitMeasures</span>(fit2, <span class="fu">c</span>(<span class="st">&quot;chisq&quot;</span>, <span class="st">&quot;df&quot;</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt;  chisq     df </span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; 41.183 50.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">fitMeasures</span>(fit, <span class="fu">c</span>(<span class="st">&quot;chisq&quot;</span>, <span class="st">&quot;df&quot;</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;  chisq     df </span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; 41.183 50.000</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="fu">fitMeasures</span>(fit2, <span class="fu">c</span>(<span class="st">&quot;chisq&quot;</span>, <span class="st">&quot;df&quot;</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;  chisq     df </span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 41.183 50.000</span></span></code></pre></div>
 <p>This is the parameter estimates with Wald <em>p</em>-values (only
 those for the regression paths are displayed)</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">parameterEstimates</span>(fit2,</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>                   <span class="at">output =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">parameterEstimates</span>(fit2,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                   <span class="at">output =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
 <pre><code>#&gt; Regressions:
 #&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|) ci.lower ci.upper
 #&gt;   f3 ~                                                                  
@@ -544,27 +544,27 @@ those for the regression paths are displayed)</p>
 <p>The Wald <em>p</em>-value is 0.067, even larger than 0.052 in the
 original model.</p>
 <p>However, the LRT <em>p</em>-values are the same:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>fit2_lrtp <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit2)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>fit2_lrtp</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt;   f3 ~                                                </span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt;     f1                0.714    0.220   13.381    0.000</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt;     f2                0.505    0.276    4.016    0.045</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt;   f4 ~                                                </span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;     f3                0.683    0.148   44.155    0.000</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; Covariances:</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt;   f1 ~~                                               </span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt;     f2                0.053    0.024    9.729    0.002</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>fit2_lrtp <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit2)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>fit2_lrtp</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;   f3 ~                                                </span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;     f1                0.714    0.220   13.381    0.000</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;     f2                0.505    0.276    4.016    0.045</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;   f4 ~                                                </span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt;     f3                0.683    0.148   44.155    0.000</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; Covariances:</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt;   f1 ~~                                               </span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt;     f2                0.053    0.024    9.729    0.002</span></span></code></pre></div>
 <p>It is because LRT <em>p</em>-value is invariant to
 parameterization.</p>
 </div>
@@ -574,30 +574,30 @@ parameterization.</p>
 zero, there are parameter for which the LRT <em>p</em>-value cannot be
 computed. For example, suppose we request LRT <em>p</em>-values for
 factor loadings using the argument <code>op</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>fit_lrtp_loadings <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit,</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>                          <span class="at">op =</span> <span class="st">&quot;=~&quot;</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>fit_lrtp_loadings</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; Latent Variables:</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;   f1 =~                                               </span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt;     x2                0.844    0.206   27.682    0.000</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt;     x3                1.145    0.255   54.842    0.000</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt;   f2 =~                                               </span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt;     x6                1.127    0.331   33.687    0.000</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;     x7                0.630    0.207   13.364    0.000</span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt;   f3 =~                                               </span></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt;     x10               0.823    0.143   50.232    0.000</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt;     x11               0.918    0.151   60.791    0.000</span></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt;   f4 =~                                               </span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt;     x14               1.043    0.240   40.668    0.000</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt;     x15               0.475    0.152   12.393    0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>fit_lrtp_loadings <span class="ot">&lt;-</span> <span class="fu">lrtp</span>(fit,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>                          <span class="at">op =</span> <span class="st">&quot;=~&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>fit_lrtp_loadings</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; Parameter Estimates:</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt;   Standard errors                             Standard</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;   Information                                 Expected</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; Latent Variables:</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt;                    Estimate  Std.Err    Chisq     LRTp</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt;   f1 =~                                               </span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt;     x2                0.844    0.206   27.682    0.000</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;     x3                1.145    0.255   54.842    0.000</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;   f2 =~                                               </span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt;     x6                1.127    0.331   33.687    0.000</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;     x7                0.630    0.207   13.364    0.000</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt;   f3 =~                                               </span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt;     x10               0.823    0.143   50.232    0.000</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt;     x11               0.918    0.151   60.791    0.000</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;   f4 =~                                               </span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt;     x14               1.043    0.240   40.668    0.000</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt;     x15               0.475    0.152   12.393    0.000</span></span></code></pre></div>
 <p>As shown above, LRT <em>p</em>-values are not computed for indicators
 with loadings fixed to zero.</p>
 </div>
